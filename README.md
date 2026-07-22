@@ -66,6 +66,29 @@ http://localhost:5173
 4. `metadata.updatedAt` と `metadata.version` を更新する
 5. 公開先へ再アップロードまたは再デプロイする
 
+## ダイヤ改正の自動チェック
+
+GitHubにこのフォルダを置く場合は、`.github/workflows/check-timetable-updates.yml` が定期的に時刻表の変化を確認します。
+
+- 毎週月曜 05:00（日本時間）にチェック
+- 3月、4月、9月、10月は毎日 05:00（日本時間）にチェック
+- JR北海道バスは停留所別時刻表ページを確認
+- 夕鉄バスはGTFSデータを確認
+- 時刻が変わっていた場合だけ `data/timetable.json` と `data/source-fingerprints.json` を更新
+- 変更があった場合は、直接反映ではなく確認用PRを作成
+
+手動で確認したい場合は、GitHub Actionsの `Check timetable updates` を `workflow_dispatch` で実行できます。ローカルで確認する場合は次を実行します。
+
+```bash
+python scripts/check_timetable_updates.py
+```
+
+更新ファイルまで作る場合は次を実行します。
+
+```bash
+python scripts/check_timetable_updates.py --write
+```
+
 ## 入力済みデータの出典
 
 - JR北海道バス: 停留所別時刻表 2026年4月1日改正
