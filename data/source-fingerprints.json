@@ -1,0 +1,37 @@
+{
+  "checkedAt": "2026-07-22T00:00:00+09:00",
+  "sources": {
+    "jhb_atsubetsu_to_shinsapporo_weekday": {
+      "label": "JR北海道バス 厚別東4条4丁目→新札幌駅 平日",
+      "url": "http://www.busdia.com/mobileTimeTable/timeOfPassage/?tid=0823012201",
+      "revision": "2026-04-01"
+    },
+    "jhb_atsubetsu_to_shinsapporo_holiday": {
+      "label": "JR北海道バス 厚別東4条4丁目→新札幌駅 土日祝",
+      "url": "http://www.busdia.com/mobileTimeTable/timeOfPassage/?tid=0823012202",
+      "revision": "2026-04-01"
+    },
+    "jhb_onopporo_to_shinsapporo_weekday": {
+      "label": "JR北海道バス 小野幌神社前→新札幌駅 平日",
+      "url": "http://www.busdia.com/mobileTimeTable/timeOfPassage/?tid=0592012201",
+      "revision": "2026-04-01"
+    },
+    "jhb_onopporo_to_shinsapporo_holiday": {
+      "label": "JR北海道バス 小野幌神社前→新札幌駅 土日祝",
+      "url": "http://www.busdia.com/mobileTimeTable/timeOfPassage/?tid=0592012202",
+      "revision": "2026-04-01"
+    },
+    "yutetsu_gtfs": {
+      "label": "夕鉄バス GTFS",
+      "url": "https://ckan.hoda.jp/dataset/24d1dd70-5395-4d6b-b41f-0d83e8eabdb9/resource/594c9dd3-d356-4445-98e2-c480d49c9d65/download/yutetsu_bus.zip",
+      "feedInfo": {
+        "feed_publisher_name": "ジョルダン株式会社",
+        "feed_publisher_url": "https://www.jorudan.co.jp",
+        "feed_lang": "ja",
+        "feed_start_date": "20260701",
+        "feed_end_date": "20261231",
+        "feed_version": "2.0"
+      }
+    }
+  }
+}
