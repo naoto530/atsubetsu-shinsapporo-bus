@@ -1,5 +1,5 @@
-const APP_CACHE = "shinsapporo-bound-bus-app-v4";
-const DATA_CACHE = "shinsapporo-bound-bus-data-v4";
+const APP_CACHE = "shinsapporo-bound-bus-app-v6";
+const DATA_CACHE = "shinsapporo-bound-bus-data-v6";
 const APP_ASSETS = [
   "./",
   "./index.html",

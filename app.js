@@ -531,6 +531,7 @@ function renderBusCard(departure, baseDate, badgeText = "") {
             <span class="pill">行先 ${escapeHtml(getDestinationStop(departure))}</span>
             <span class="pill">${escapeHtml(dayBadge)}</span>
           </div>
+          ${renderSubwayConnections(departure)}
           ${renderOperationAction(departure)}
         </div>
       </div>
@@ -770,4 +771,36 @@ function registerServiceWorker() {
       showToast("オフライン機能を開始できませんでした");
     });
   });
+}
+
+
+function getSubwayConnections(departure) {
+  const subway = state.timetable?.subway;
+  const travel = getTravelTimeMinutes(departure);
+  if (!subway || !travel) return null;
+  const arrival = addMinutes(departure.departureAt, travel);
+  const ready = addMinutes(arrival, subway.walkMinutes);
+  // The 24:00 train belongs to the preceding service day.
+  const serviceDate = new Date(departure.departureAt);
+  if (serviceDate.getHours() < 4) serviceDate.setDate(serviceDate.getDate() - 1);
+  const dayType = getServiceDayInfo(serviceDate).type;
+  const trains = (subway.timetables?.[dayType] || [])
+    .map(time => combineDateAndMinutes(serviceDate, parseTimeToMinutes(time)))
+    .filter(date => date >= ready)
+    .slice(0, 3);
+  return { arrival, ready, trains };
+}
+
+function renderSubwayConnections(departure) {
+  const result = getSubwayConnections(departure);
+  if (!result) return '';
+  const subway = state.timetable.subway;
+  const timeLabel = date => (formatDateInput(date) !== formatDateInput(departure.departureAt) ? '翌日 ' : '') + formatTimeInput(date);
+  return `<section class="subway-connection" aria-label="地下鉄への乗り継ぎ">
+    <strong>地下鉄 新さっぽろ発・宮の沢方面</strong>
+    <p>到着目安 ${escapeHtml(timeLabel(result.arrival))} → 徒歩${subway.walkMinutes}分 → ${escapeHtml(timeLabel(result.ready))}以降</p>
+    <div class="subway-trains">${result.trains.length ? result.trains.map((date, i) => `<span><small>${i + 1}本目</small><b>${escapeHtml(timeLabel(date))}</b></span>`).join('') : '<span>接続できる地下鉄はありません（終電後）</span>'}</div>
+    ${result.trains.length > 0 && result.trains.length < 3 ? '<p>終電までの残りの便のみ表示しています。</p>' : ''}
+    <p class="connection-note">接続目安（バスの遅延は未反映）</p>
+  </section>`;
 }
